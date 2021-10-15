@@ -51,6 +51,11 @@ int main()
         char tape_values[] = { {% for tape in range(am.nb_tapes) %} tape_read({{tape}}), {% endfor %} };
         switch (current)
         {
+        case 0:
+        err_state:
+            fprintf(stderr, "ERROR '%s' FROM STATE '%d': '%s'\n", {{json.dumps(am.undefined_state[0])}}, current, {{json.dumps(am.undefined_state[1])}});
+            display(step, current);
+            return EXIT_FAILURE;
 
     {% for state, (number, message) in end_states.items() %}
         case {{number}}: // {{state}}
@@ -71,9 +76,7 @@ int main()
         {% endfor %}
             else
             {
-                fprintf(stderr, "MISSING TRANSITION FROM STATE '%d'\n", current);
-                display(step, current);
-                return EXIT_FAILURE;
+                goto err_state;
             }
 
             break;
