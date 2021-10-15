@@ -14,10 +14,10 @@ def main():
 
     load_commands()
 
-    for name, (args, fct) in COMMANDS.items():
+    for name, (args, require, fct) in COMMANDS.items():
         parser = subparsers.add_parser(name, aliases=[name[:3]], help=fct.__doc__)
-        parser.set_defaults(func=fct)
-        parser.add_argument("filename", help="input filename containing machine description")
+        parser.set_defaults(func=fct, require=require)
+        parser.add_argument("filename", help="input filename containing machine description", **({} if require else {"default": None}))
         parser.add_argument("-n", "--name", help="name of the machine used", default=None)
         for short, long, help, default, action in args:
             parser.add_argument(short, long, help=help, default=default, action=action)
@@ -47,8 +47,8 @@ def main():
                 print(f"{len(lm)} machines found.")
                 list_machines()
 
-    m = find_machine(args.filename, args.name)
-    args.func(m, args=args, **vars(args))
+    m = find_machine(args.filename, args.name) if args.require and args.filename is not None else None
+    args.func(am=m, args=args, **vars(args))
 
 
 if __name__ == '__main__':

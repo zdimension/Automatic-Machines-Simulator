@@ -14,9 +14,12 @@ def load_commands():
 COMMANDS = {}
 
 
-def cmd(*args):
+def cmd(args=None, require_file=True):
+    if args is None:
+        args = []
+
     def inner(fct):
-        COMMANDS[fct.__name__] = args, fct
+        COMMANDS[fct.__name__] = args, require_file, fct
         return fct
 
     return inner

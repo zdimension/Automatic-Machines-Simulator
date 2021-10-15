@@ -6,11 +6,11 @@ from am.commands.simulate.ui_curses import UI_Curses
 from am.turing_machine import Simulation
 
 
-@cmd(
+@cmd([
     ("-t", "--tape", "initial tape. First position inside angle brackets <.>", "<_>", None),
     ("-r", "--result-only", "no simulation, result only", None, "store_true"),
     ("-s", "--statistics", "print detailed statistics", None, "store_true")
-)
+])
 def simulate(am, tape, result_only, statistics, **kwargs):
     """
     Simulate the Turing machine
