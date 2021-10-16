@@ -5,6 +5,10 @@ from collections import defaultdict
 from am.commands import cmd
 
 
+def escape(s):
+    return s.replace("#", "&#35;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def get_dot(am):
     DOT_DATA = []
     D = {-1: "L", 0: "S", 1: "R"}
@@ -25,9 +29,9 @@ def get_dot(am):
             T[(m, ns)].append((r, w))
         for m, ns in T:
             r, w = zip(*T[(m, ns)])
-            R = '<font color="blue">|</font>'.join(",".join(ro) for ro in r)
+            R = '<font color="blue">|</font>'.join(",".join(map(escape, ro)) for ro in r)
             w = w[:1] if len(set(w)) == 1 else w
-            W = '<font color="blue">|</font>'.join(",".join(wo) for wo in w)
+            W = '<font color="blue">|</font>'.join(",".join(map(escape, wo)) for wo in w)
             W = "" if W == R else '<font color="red">' + W + "</font> "
             M = ",".join(D[c] for c in m)
             if ns == s:
