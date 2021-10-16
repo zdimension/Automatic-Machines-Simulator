@@ -66,9 +66,6 @@ def designer(filename, *args, **kwargs):
 
     import pathlib
 
-    # root.tk.call("source", pathlib.Path(__file__).parent / "sun-valley.tcl")
-    # root.tk.call("set_theme", "light")
-
     import pydot
     from PIL import Image, ImageTk
     import io
@@ -85,7 +82,7 @@ def designer(filename, *args, **kwargs):
             try:
                 graph, = pydot.graph_from_dot_data(dot_code)
             except:
-                pass
+                print(dot_code)
             else:
                 image = Image.open(io.BytesIO(graph.create_png()))
                 disp = ImageTk.PhotoImage(image)
