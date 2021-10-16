@@ -7,11 +7,11 @@ from am.commands import cmd
 from am.turing_machine import BLANK
 
 
-@cmd(
+@cmd([
     ("-i", "--input", "fill the first tape with standard input", None, "store_true"),
     ("-v", "--verbose", "display status information at each iteration", None, "store_true"),
     ("-l", "--linked", "use linked list instead of linear buffer allocation (for tapes)", False, "store_true"),
-)
+])
 def codegen(am, input, verbose, linked, **kwargs):
     """
     Generates a C implementation of an automatic machine.
