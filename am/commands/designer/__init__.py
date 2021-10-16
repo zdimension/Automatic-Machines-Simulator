@@ -75,10 +75,12 @@ def designer(filename, *args, **kwargs):
 
     dot_code = None
     ev = threading.Event()
-
+    exited = False
     def runner():
         while True:
             ev.wait(1)
+            if exited:
+                return
             if not ev.is_set():
                 continue
             ev.clear()
@@ -144,4 +146,6 @@ def designer(filename, *args, **kwargs):
     try:
         root.mainloop()
     except KeyboardInterrupt:
-        os._exit(0)
+        pass
+
+    os._exit(0)
