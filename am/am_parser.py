@@ -18,7 +18,7 @@ def update_cst(d1, d2, s):
 
 
 class AM:
-    __slots__ = ('transitions', 'initial_state', 'end_states', 'undefined_state', 'nb_tapes', 'name')
+    __slots__ = ('transitions', 'initial_state', 'end_states', 'undefined_state', 'nb_tapes', 'name', 'lineno')
 
     def __repr__(self):
         return f'{self.name} {self.nb_tapes} >{self.initial_state} {self.end_states} {self.undefined_state} {len(self.transitions)}/{sum(len(i) for i in self.transitions.values())}'
@@ -67,6 +67,7 @@ def p_am(p):
     res.undefined_state = p[2][2]
     res.nb_tapes = p[1][1]
     res.name = p[1][0]
+    res.lineno = p[1][2]
     res.set_transitions(p[3])
 
     p[0] = res
@@ -76,7 +77,7 @@ def p_name(p):
     '''
     name : NEW STRING INT
     '''
-    p[0] = p[2:]
+    p[0] = [*p[2:], p.lineno(1)]
 
 
 def p_specif(p):
