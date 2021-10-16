@@ -19,7 +19,7 @@ def cmd(args=None, require_file=True):
         args = []
 
     def inner(fct):
-        COMMANDS[fct.__name__] = args, require_file, fct
+        COMMANDS[fct.__name__] = fct.cmd_data = args, require_file, fct
         return fct
 
     return inner
