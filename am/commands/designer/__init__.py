@@ -9,6 +9,9 @@ from am.commands.graph import get_dot
 
 @cmd(require_file=False)
 def designer(filename, *args, **kwargs):
+    """
+    Interactive automatic machine editor with live preview. Requires Graphviz.
+    """
     import tkinter as tk
     from tkinter import ttk
     import idlelib.colorizer as ic
