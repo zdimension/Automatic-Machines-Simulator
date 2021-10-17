@@ -112,7 +112,7 @@ def designer(filename, *args, **kwargs):
                 b1.see(str(machine.lineno) + ".0")
             nonlocal dot_code
             old_drop = drop.get()
-            dot_code = get_dot(machine).replace("label = ", "label =").replace("rankdir = LR", "rankdir = TB")
+            dot_code = get_dot(machine, True, True).replace("label = ", "label =")
             ev.set()
         except:
             pass
