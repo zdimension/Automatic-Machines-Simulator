@@ -44,6 +44,22 @@ class AM:
                     for i in range(sl.pop()):
                         update_cst(self.transitions[s], {tuple(r[i if len(r) > 1 else 0] for r in t): ((tuple(r[i if len(r) > 1 else 0] for r in tr[s][t][0])), mv, ns)}, s)
 
+    def get_code(self):
+        def to_str(seq):
+            return ",".join(f"'{x}" for x in seq)
+
+        lines = []
+        lines.append(f"NEW \"{self.name}\" {self.nb_tapes}")
+        lines.append(f"START @{self.initial_state}")
+        for e, m in self.end_states.items():
+            lines.append(f"END @{e} \"{m}\"")
+        lines.append(f"UNDEFINED @{self.undefined_state[0]} \"{self.undefined_state[1]}\"")
+        for state, trans in self.transitions.items():
+            lines.append(f"FROM @{state}")
+            for read, (write, move, next) in trans.items():
+                lines.append(f"{to_str(read)} {to_str(write)} {','.join('SRL'[m] for m in move)} @{next}")
+        return "\n".join(lines)
+
 
 def p_all(p):
     '''
