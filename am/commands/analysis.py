@@ -15,7 +15,7 @@ def analysis(am, **kwargs):
     cache = {}
     dupl = {}
     for state, transitions in am.transitions.items():
-        fs = frozenset(transitions)
+        fs = frozenset(transitions.items())
         if fs in cache:
             if fs not in dupl:
                 dupl[fs] = [cache[fs]]
